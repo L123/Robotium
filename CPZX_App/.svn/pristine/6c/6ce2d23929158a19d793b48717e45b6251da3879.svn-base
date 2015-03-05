@@ -1,0 +1,53 @@
+package com.example.android.ceping.test;
+
+import android.view.View;
+
+import com.robotium.solo.Solo;
+
+public class RobotiumTest2 {
+	RobotiumTest1 RT = new RobotiumTest1();
+	Config C = new Config();
+	//打开测试记录
+	public void openExamRecord(Solo solo,String grade,String subject,String listMessage){
+		solo.clickOnView(solo.getView("home_top_iv_left"));
+		solo.clickOnText(C.TESTRECORD);
+		RT.choose(solo,grade,subject);
+		RT.found(solo, listMessage);
+		solo.clickOnView((View) solo.getText(listMessage).getParent());
+		solo.sleep(5000);
+		solo.goBack();
+		solo.goBack();
+	}
+	
+	//查看试卷原题
+	public void openExamination(Solo solo,String grade,String subject,String listMessage){
+		solo.clickOnView(solo.getView("home_top_iv_left"));
+		solo.clickOnText(C.TESTRECORD);
+		RT.choose(solo,grade,subject);
+		RT.found(solo, listMessage);
+		solo.clickLongOnView((View) solo.getText(listMessage).getParent());
+		solo.clickOnView(solo.getView("cancel"));//查看原题
+		solo.sleep(5000);
+		solo.goBack();
+		solo.goBack();
+	}
+	
+	//删除测试记录，当n=1时执行删除
+	public void deleteExamRecord(Solo solo,String grade,String subject,String listMessage,int n){
+		solo.clickOnView(solo.getView("home_top_iv_left"));
+		solo.clickOnText(C.TESTRECORD);
+		RT.choose(solo,grade,subject);
+		RT.found(solo, listMessage);
+		solo.clickLongOnView((View) solo.getText(listMessage).getParent());
+		solo.clickOnView(solo.getView("sureBT"));//删除测试记录
+		if(n==1){
+			solo.clickOnView(solo.getView("sureBT"));//确认删除测试记录
+			RT.checkMessage(solo, C.Toast_DELETE_SUCCEED);
+		}
+		else{
+			solo.clickOnView(solo.getView("cancel"));//取消删除测试记录
+		}
+		solo.sleep(1000);
+		solo.goBack();
+	}
+}

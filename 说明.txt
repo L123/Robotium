@@ -1,0 +1,8 @@
+1、APK使用re-sign.jar进行重签名要使用jdk6（使用批处理文件签名）
+注意：将被测程序和脚本放在debug.keystore的同级目录
+2、Tools文件夹下必须有zipalign.exe
+3、新建测试工程中导入robotium.jar包
+4、修改工程中的AndroidManifest.xml文件中的内容，例如：
+ <instrumentation
+        android:name="android.test.InstrumentationTestRunner"
+        android:targetPackage="com.xiaomi.channel" />  

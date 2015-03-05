@@ -1,0 +1,40 @@
+package com.example.android.ceping.test;
+
+import org.junit.Test;
+
+import com.robotium.solo.Solo;
+
+public class myCollect {
+	RobotiumTest1 RT = new RobotiumTest1();
+	@Test
+	//添加试题到测试库生成试卷
+	public void myCollect(Solo solo,int n) {
+		solo.clickOnView(solo.getView("home_top_iv_left"));
+		solo.clickOnText("我的收藏");
+		RT.addQuestions(solo, n);
+		
+	}
+	
+	public void cancleCollect(Solo solo,int n){
+		solo.clickOnView(solo.getView("home_top_iv_left"));
+		solo.clickOnText("我的收藏");
+		solo.waitForText("取消收藏");
+		solo.clickOnText("取消收藏");	
+		if(n==1){
+			solo.clickOnView(solo.getView("sureBT"));
+		}
+		else{
+			solo.clickOnView(solo.getView("cancel"));
+		}
+		solo.goBack();
+	}
+	
+	public void outOfQuestions(Solo solo){
+		solo.clickOnView(solo.getView("home_top_iv_left"));
+		solo.clickOnText("我的收藏");
+		solo.waitForText("移出测试库");
+		solo.clickOnText("移出测试库");	
+		RT.checkMessage(solo, "加入测试库");
+		solo.goBack();
+	}
+}

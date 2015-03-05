@@ -1,0 +1,40 @@
+package com.example.android.ceping.test;
+
+import android.view.View;
+
+import com.robotium.solo.Solo;
+
+public class myExamPaper {
+	RobotiumTest1 RT = new RobotiumTest1();
+	public void openPaper(Solo solo,String listMessage){
+		solo.clickOnView(solo.getView("home_top_iv_left"));
+		solo.clickOnText("我的组卷");
+		solo.sleep(1000);
+		solo.clickOnView((View)solo.getText(listMessage).getParent());
+		solo.sleep(3000);
+		if(solo.getText("交卷").isShown()==true){
+			solo.goBack();
+			solo.clickOnView(solo.getView("sureBT"));
+		}
+		else if(solo.getText("答题卡").isShown()==true){
+			solo.goBack();
+			
+		}
+		solo.goBack();	
+	}
+	
+	public void deletePaper(Solo solo,String grade,String subject,String listMessage,int n){
+		solo.clickOnView(solo.getView("home_top_iv_left"));
+		solo.clickOnText("我的组卷");
+		solo.clickLongOnView((View) solo.getText(listMessage).getParent());
+		if(n==1){
+			solo.clickOnView(solo.getView("sureBT"));//确认删除测试记录
+			RT.checkMessage(solo, "删除成功");
+		}
+		else{
+			solo.clickOnView(solo.getView("cancel"));//取消删除测试记录
+		}
+		solo.sleep(1000);
+		solo.goBack();
+	}
+}

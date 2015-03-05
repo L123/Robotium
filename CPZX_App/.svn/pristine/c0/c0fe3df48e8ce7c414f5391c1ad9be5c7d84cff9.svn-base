@@ -1,0 +1,70 @@
+package com.example.android.ceping.test;
+
+import org.junit.Test;
+
+import com.robotium.solo.Solo;
+
+public class myCollect {
+	RobotiumTest1 RT = new RobotiumTest1();
+	@Test
+	//添加试题到测试库生成试卷
+	public void makePaper(Solo solo,int n) {
+		solo.clickOnView(solo.getView("home_top_iv_left"));
+		solo.clickOnText("我的收藏");
+		RT.addQuestions(solo, n);
+		
+	}
+	//对试题进行取消收藏,返回首页n操作的试题个数，m是否取消收藏
+	public void cancleTestQuestions(Solo solo,int n,int m){
+		solo.clickOnView(solo.getView("home_top_iv_left"));
+		solo.clickOnText("我的收藏");
+		for(int i=0;i<n;i++){
+			if(solo.waitForText("取消收藏")==true){			
+				solo.clickOnText("取消收藏");	
+				if(m==1){
+					solo.clickOnView(solo.getView("sureBT"));
+				}
+				else{
+					solo.clickOnView(solo.getView("cancel"));
+				}
+			}
+			else{
+				solo.scrollToSide(solo.RIGHT);
+			}					
+		}
+		solo.goBack();
+		solo.sleep(1000);
+	}
+	
+//	//取消收藏
+//	public void cancleCollect(Solo solo,int n){
+//		solo.clickOnView(solo.getView("home_top_iv_left"));
+//		solo.clickOnText("我的收藏");
+//		solo.waitForText("取消收藏");
+//		solo.clickOnText("取消收藏");	
+//		if(n==1){
+//			solo.clickOnView(solo.getView("sureBT"));
+//		}
+//		else{
+//			solo.clickOnView(solo.getView("cancel"));
+//		}
+//		solo.goBack();
+//	}
+	
+	//试题移出测试库
+	public void outOfQuestions(Solo solo){
+		solo.clickOnView(solo.getView("home_top_iv_left"));
+		solo.clickOnText("我的收藏");
+		//solo.waitForText("移出测试库");
+		if(solo.waitForText("移出测试库")==true){
+			solo.clickOnText("移出测试库");	
+		}
+		else if(solo.waitForText("加入测试库")==true){
+			solo.clickOnText("加入测试库");
+			solo.sleep(1000);
+			solo.clickOnText("移出测试库");
+		}
+		RT.checkMessage(solo, "加入测试库");
+		solo.goBack();
+	}
+}

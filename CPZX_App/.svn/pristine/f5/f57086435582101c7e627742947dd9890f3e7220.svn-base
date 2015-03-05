@@ -1,0 +1,59 @@
+package com.example.android.ceping.test;
+
+import com.robotium.solo.Solo;
+
+public class wrongBook {
+	RobotiumTest1 RT = new RobotiumTest1();
+	
+	//模块入口
+	public void wrongBook(Solo solo){
+		solo.clickOnView(solo.getView("home_top_iv_left"));
+		solo.clickOnText("我的错题本");
+	}
+	
+	//添加试题到测试库生成试卷
+	public void makePaper(Solo solo,String grade,String subject,int n) {
+		wrongBook(solo);
+		RT.choose(solo,grade,subject);
+		RT.addQuestions(solo, n);
+		RT.loginout2(solo);
+	}
+	
+	//试题移出测试库
+	public void outOfQuestions(Solo solo,String grade,String subject){
+		wrongBook(solo);
+		RT.choose(solo,grade,subject);
+		if(solo.searchText("您当前错题本中没有试题")){
+			solo.sleep(500);
+		}
+		else{
+			if(solo.waitForText("移出测试库")==true){
+				solo.clickOnText("移出测试库");	
+			}
+			else if(solo.waitForText("加入测试库")==true){
+				solo.clickOnText("加入测试库");
+				solo.sleep(500);
+				solo.clickOnText("移出测试库");
+			}
+			RT.checkMessage(solo, "加入测试库");
+		}
+		solo.goBack();
+		RT.loginout(solo);	
+	}
+		
+	//移出错题本，n=1时确认移出错题本
+	public void outOfWrongBook(Solo solo,String grade,String subject,int n){
+		wrongBook(solo);
+		RT.choose(solo,grade,subject);
+		solo.waitForText("移出错题本");
+		solo.clickOnText("移出错题本");	
+		if(n==1){
+			solo.clickOnView(solo.getView("sureBT"));
+		}
+		else{
+			solo.clickOnView(solo.getView("cancel"));
+		}
+			solo.goBack();
+			RT.loginout(solo);
+	}
+}

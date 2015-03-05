@@ -1,0 +1,100 @@
+package com.example.android.ceping.test;
+
+import android.view.View;
+
+import com.robotium.solo.Solo;
+
+public class accountSet {
+	RobotiumTest1 RT = new RobotiumTest1();
+	//进入账号设置页面
+	public void accountSet(Solo solo){
+		solo.clickOnView(solo.getView("home_top_iv_left"));
+		solo.clickOnText("账号设置");
+		RT.checkMessage(solo, "昵称");
+	}
+	//在账号设置页面退出应用
+	public void loginout(Solo solo){
+		solo.waitForText("注销", 1, 10000);
+		solo.clickOnText("注销");
+		RT.checkMessage(solo,"登录");
+		for(int i=0;i<2;i++){
+			solo.goBack();
+			solo.sleep(100);
+		}
+	}
+	//修改昵称
+	public void nickname(Solo solo,String nickname,String checkMessage){
+		accountSet(solo);
+		solo.clickOnView(solo.getView("setting_nickname_rl")); 
+		solo.clearEditText(0);
+		solo.enterText(0, nickname);
+		solo.clickOnView(solo.getView("modify_nickname_button"));
+		RT.checkDynamicMessage(solo, checkMessage);
+		if(nickname==""){
+			solo.goBack();
+		}
+		loginout(solo);
+	}
+	//个性签名
+	public void signature(Solo solo,String signature,String checkMessage){
+		accountSet(solo);
+		solo.clickOnView(solo.getView("setting_signature_rl"));
+		solo.clearEditText(0);
+		solo.enterText(0, signature);
+		solo.clickOnView(solo.getView("modify_signature_submit"));
+		RT.checkMessage(solo, checkMessage);
+		loginout(solo);
+	}
+	//修改密码
+	public void changePassWord(Solo solo,String oldPassWord,String newPassWord,String surePassWord,String checkMessage){
+		accountSet(solo);
+		solo.clickOnView(solo.getView("setting_password_rl"));
+		solo.enterText(0, oldPassWord);
+		solo.enterText(1, newPassWord);
+		solo.enterText(2, surePassWord);
+		solo.clickOnView(solo.getView("modify_password_button"));
+		RT.checkDynamicMessage(solo, checkMessage);
+		if(checkMessage!="修改用户密码成功"){
+			solo.goBack();
+		}
+		loginout(solo);
+	}
+	
+	public void level(Solo solo,String checkMessage){
+		accountSet(solo);
+		solo.clickOnView(solo.getView("setting_level_rl"));
+		RT.checkMessage(solo, checkMessage);
+		solo.goBack();
+		loginout(solo);
+	}
+	//关于测评中心
+	public void about(Solo solo,String title,String checkMessage,String opinion,String phone){
+		accountSet(solo);
+		solo.clickOnView(solo.getView("setting_about_rl"));
+		//服务协议
+		if(solo.getView("about_agreement_rl")==(View)solo.getText(title).getParent()){
+			solo.clickOnView(solo.getView("about_agreement_rl"));
+			RT.checkMessage(solo, checkMessage);
+			solo.goBack();
+		}
+		//意见反馈，反馈成功提示：感谢您提供的反馈
+		else if(solo.getView("about_feedback_rl")==(View)solo.getText(title).getParent()){
+			solo.clickOnView(solo.getView("about_feedback_rl"));
+			solo.enterText(0, opinion);
+			solo.enterText(1, phone);
+			if(opinion!="" || phone!=""){
+				solo.clickOnView(solo.getView("feedback_btn_submit"));
+				RT.checkMessage(solo, checkMessage);
+				solo.sleep(1000);
+			}
+		}
+		//版本更新
+		else if(solo.getView("about_update_rl")==(View)solo.getText(title).getParent()){
+			solo.clickOnView(solo.getView("about_update_rl"));
+			RT.checkMessage(solo, checkMessage);
+			solo.goBack();		
+		}	
+		solo.goBack();
+		loginout(solo);
+	}
+}

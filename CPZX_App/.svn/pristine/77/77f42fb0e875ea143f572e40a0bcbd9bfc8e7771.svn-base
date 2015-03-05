@@ -1,0 +1,321 @@
+package com.example.android.ceping.test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import android.test.ActivityInstrumentationTestCase2;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.robotium.solo.Solo;
+
+
+public class CePingAppTest extends ActivityInstrumentationTestCase2 {
+	@SuppressWarnings("unchecked")
+
+	public CePingAppTest() {
+		super(packageName, launchActivityClass);
+		// TODO Auto-generated constructor stub
+	}
+	/************************************************************************/
+	public Solo solo;
+	RobotiumTest1 RT = new RobotiumTest1();
+	RobotiumTest2 RT2 = new RobotiumTest2();
+	myExamPaper EP = new myExamPaper();
+	myCollect MC = new myCollect();
+	wrongBook WB = new wrongBook();
+	accountSet AS = new accountSet();
+	/************************************************************************/
+	private static Class<?>launchActivityClass;
+	private static String mainActivity = "com.dtedu.mobile.evation.SeparateActivity";
+	private static String packageName = "com.dtedu.mobile.evation";
+	static{
+		try {
+			launchActivityClass = Class.forName(mainActivity);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/************************************************************************/
+	@Before
+	public void setUp() throws Exception {
+		solo = new Solo(getInstrumentation(),getActivity());
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		solo.finishOpenedActivities();
+	}
+	/************************************************************************/
+
+	@Test
+		
+//	//正确的用户名和密码，成功登录
+//	public void test1LoginRightUsernameAndPassword() {	
+//		RT.login2(solo,"teachertest02","jiaoyu");
+//		RT.checkMessage(solo,"七天诊断");
+//		RT.loginout(solo);
+//	}	
+//		
+//	//正确的用户名、错误的密码，登录提示：密码错误
+//	public void test2LoginRightUsernameAndWrongPassword() {
+//		RT.login2(solo,"teachertest02","123");
+//		RT.checkDynamicMessage(solo,"密码错误");
+//	}	
+
+//	//正确的用户名、长度小于3的密码，登录提示：密码错误
+//	public void test3LoginRightUsernameAndShortPassword() {
+//		RT.login2(solo,"teachertest02","12");
+//		RT.checkDynamicMessage(solo,"密码长度应大于3个字符");
+//	}
+//		
+//	//正确的用户名、密码为空，登录提示：密码不能为空
+//	public void test4LoginRightUsernameAndNullPassword() {
+//		RT.login2(solo,"teachertest02","");
+//		RT.checkDynamicMessage(solo,"密码不能为空");
+//	}
+//			
+//	//错误的用户名、长度小于3的密码，登录提示：密码长度应大于3个字符
+//	public void test5LoginIncorrentUsernameAndShortPassword() {
+//		RT.login2(solo,"123456789","12");
+//		RT.checkDynamicMessage(solo,"密码长度应大于3个字符");
+//	}
+//		
+//	//错误的用户名、密码为空，登录提示：密码不能为空
+//	public void test6LoginIncorrentUsernameAndNullPassword() {
+//		RT.login2(solo,"123456789","");
+//		RT.checkDynamicMessage(solo,"密码不能为空");
+//	}
+//			
+//	//错误的用户名、错误的不存在密码（格式正确），登录提示：账号不存在
+//	public void test7LoginWrongUsernameAndIncorrentPassword() {
+//		RT.login2(solo,"teachertest111","jiaoyu1212");
+//		RT.checkDynamicMessage(solo,"账号不存在");
+//	}	
+//
+//	//错误的用户名、他人的密码，登录提示：账号不存在
+//	public void test8LoginWrongUsernameAndOtherPassword() {
+//		RT.login2(solo,"teachertest111","jiaoyu");
+//		RT.checkDynamicMessage(solo,"账号不存在");
+//	}
+//		
+//	//用户名和密码为空，登录提示：账号不能为空
+//	public void test9LoginNullUsernameAndPassword() {
+//		RT.login2(solo,"","");
+//		RT.checkDynamicMessage(solo,"账号不能为空");
+//	}
+//			
+//	//用户名为空、密码错误，登录提示：账号不能为空
+//	public void test10LoginNullUsernameAndIncorrentPassword() {
+//		RT.login2(solo,"","123");
+//		RT.checkDynamicMessage(solo,"账号不能为空");
+//	}
+//
+//	//用户名为空、他人的密码，登录提示：账号不能为空
+//	public void test11LoginNullUsernameAndOtherPassword() {
+//		RT.login2(solo,"","jiaoyu");
+//		RT.checkDynamicMessage(solo,"账号不能为空");
+//	}
+//
+//	//用户名为空、长度小于3的密码，登录提示：账号不能为空
+//	public void test12LoginNullUsernameAndShortPassword() {
+//		RT.login2(solo,"","1");
+//		RT.checkDynamicMessage(solo,"账号不能为空");
+//	}	
+	
+	/************************************************************************/
+	
+	/*
+	 * 修改syncExercises后面的【课程】和【章节】即可
+	 * 【年级】和【学科】非必填，根据需要设置
+	 */
+
+//	//同步练习
+//	public void test13syncExercises() {
+//		RT.checkLogin(solo,"teachertest02","jiaoyu");
+//		//从第2个参数开始，依次是：年级、学科、课程、章节（年级和学科非必填）
+//		RT.syncExercises(solo,"二年级","数学","二年级数学下册","数据收集整理");
+//		RT.answer(solo);
+//		RT.loginout(solo);
+//	}	
+
+//	/************************************************************************/
+//	/*
+//	 * 修改specialExercises后的知识点（支持知识点下有效试题大于10），少于10道题不能执行
+//	 * 【年级】和【学科】非必填，根据需要设置
+//	 */	
+//
+//	//专项练习
+//	public void test14specialExercises(){
+//		RT.checkLogin(solo,"teachertest02","jiaoyu");
+//		//从第2个参数开始，依次是：年级、学科，知识点（年级和学科非必填）
+//		RT.specialExercises(solo, "","","集合与常用逻辑用语");
+//		RT.answer(solo);
+//		RT.loginout(solo);
+//	}
+//
+//	/************************************************************************/
+//	/*
+//	 * 修改examExercises最后一个参数【试卷名称】，即可完成对应试卷的答题（不对子母题进行答题）
+//	 * 【年级】和【学科】非必填，根据需要设置
+//	 */	
+//
+//	//考试训练
+//	public void test15examExercises(){
+//		RT.checkLogin(solo,"teachertest02","jiaoyu");
+//		//从第2个参数开始，依次是：年级、学科，试卷名称（年级和学科非必填）
+//		RT.examExercises(solo,"初中", "语文", "2014浙江湖州中考语文试题");
+//		RT.answer(solo);
+//		RT.loginout(solo);
+//	}
+//	
+//
+	/************************************************************************/
+	//强化训练
+	/*
+	 * intensifyExercisesOne适用于进入一级知识点试题库
+	 * intensifyExercisesTwoe适用于进入二级知识点试题库
+	 * intensifyExercisesThree适用于进入三级知识点试题库
+	 * 每个测试用例中只允许存放一个测试场景
+	 */
+ 
+//	public void test16intensifyExercises(){
+//		RT.checkLogin(solo,"teachertest02","jiaoyu");
+//		//从第2个参数开始，依次是：年级、学科，1、2、3级知识点（年级和学科非必填）		
+//		//RT.intensifyExercisesOne(solo,"","生物", "分子与细胞");
+//		//RT.intensifyExercisesTwo(solo,"","生物", "分子与细胞", "细胞的分子组成");
+//		RT.intensifyExercisesThree(solo,"","生物", "分子与细胞", "细胞的分子组成", "细胞中的元素和化合物");
+//		RT.addQuestions(solo,5);
+//		RT.answer(solo);
+//		RT.loginout(solo);
+//	}
+	
+//	/************************************************************************/
+//	/*
+//	 * openExamRecord、openExamination、deleteExamRecord
+//	 * 3个方法都有四个参数，从第2个参数开始，依次代表：【年级】、【学科】、【试卷名称】
+//	 */	
+//
+//	//测试记录——打开测试结果
+//	public void test17openExamRecord(){
+//		RT.checkLogin(solo,"teachertest02","jiaoyu");
+//		RT2.openExamRecord(solo, "", "", "集合与常用逻辑用语-专项训练");
+//		RT.loginout(solo);
+//	}
+//	//测试记录——查看原题
+//	public void test17openExamination(){
+//		RT.checkLogin(solo,"teachertest02","jiaoyu");
+//		RT2.openExamination(solo, "", "", "集合与常用逻辑用语-专项训练");
+//	}
+//	//测试记录——删除测试记录
+//	public void test17deleteExamRecord(){
+//		RT.checkLogin(solo,"teachertest02","jiaoyu");
+//		//最后一个参数是1的时候执行删除，其他int参数则取消删除
+//		RT2.deleteExamRecord(solo,"", "", "不等关系与不等式 等 自主练习",1);
+//		RT.loginout(solo);	
+//	}
+
+//	/************************************************************************/
+//	/*
+//	 * openPaper、deletePaper
+//	 * 2个方法都有四个参数，从第2个参数开始，依次代表：【年级】、【学科】、【试卷名称】
+//	 */	
+
+//	//我的组卷——打开试卷
+//	public void test18openPaper(){
+//		RT.checkLogin(solo,"teachertest02","jiaoyu");
+//		EP.openPaper(solo, "", "", "细胞中的元素和化合物 自主练习");
+//		RT.loginout(solo);	
+//	}
+//	//我的组卷——删除试卷
+//	public void test18deletePaper(){
+//		RT.checkLogin(solo,"teachertest02","jiaoyu");
+//		//最后一个参数是1的时候执行删除，其他int参数则取消删除
+//		EP.deletePaper(solo, "", "", "细胞中的元素和化合物 自主练习", 1);
+//		RT.loginout(solo);	
+//	}
+
+//	/************************************************************************/
+//
+//	//我的收藏——添加试题到测试库生成试卷
+//	public void test19makePaper(){
+//		RT.checkLogin(solo,"teachertest02","jiaoyu");
+//		MC.makePaper(solo, "", "",1);
+//		RT.loginout2(solo);
+//	}
+//	//我的收藏——移出测试库
+//	public void test19outOfQuestions(){
+//		RT.checkLogin(solo,"teachertest02","jiaoyu");
+//		MC.outOfQuestions(solo, "", "");
+//		RT.loginout(solo);	
+//	}
+//	//我的收藏——取消试题收藏
+//	public void test19cancleTestQuestions(){
+//		RT.checkLogin(solo,"teachertest02","jiaoyu");
+//		MC.cancleTestQuestions(solo, "", "", 2, 1);
+//		RT.loginout(solo);
+//	}
+
+//	/************************************************************************/
+//
+//	//我的错题本——添加试题到测试库生成试卷
+//	public void test20makePaper(){
+//		RT.checkLogin(solo,"teachertest02","jiaoyu");
+//		WB.makePaper(solo, "", "", 1);	
+//	}
+	//我的错题本——移出测试库
+	public void test20outOfQuestions(){
+		RT.checkLogin(solo,"teachertest02","jiaoyu");
+		WB.outOfQuestions(solo, "", "");	
+	}
+	//我的错题本——移出错题本
+	public void test20outOfWrongBook(){
+		RT.checkLogin(solo,"teachertest02","jiaoyu");
+		WB.outOfWrongBook(solo, "", "", 1);
+	}
+//
+//	/************************************************************************/
+//
+//	//账号设置-昵称
+//	public void test21nickname(){
+//		RT.checkLogin(solo,"teachertest02","jiaoyu");
+//		//成功修改提示：修改用户信息成功/不填提示：昵称不能为空
+//		AS.nickname(solo, "", "昵称不能为空");
+//	}
+//	//账号设置-个性签名
+//	public void test22signature(){
+//		RT.checkLogin(solo,"teachertest02","jiaoyu");
+//		AS.signature(solo, "修改签名", "修改用户信息成功");
+//	}
+//	//账号设置-修改密码
+//	public void test23changePassWord(){
+//		RT.checkLogin(solo,"teachertest02","jiaoyu");
+//		AS.changePassWord(solo, "jiaoyu", "jiaoyu", "jiaoyu", "修改用户密码成功");
+//	}
+//	//账号设置-学力和登记
+//	public void test25level(){
+//		RT.checkLogin(solo,"teachertest02","jiaoyu");
+//		AS.level(solo, "什么是学力");	
+//	}
+//
+//	//账号设置-关于测评中心
+//	public void test26about(){
+//		RT.checkLogin(solo,"teachertest02","jiaoyu");
+//		switch(2){
+//		case 1: AS.about(solo, "服务协议","广东东田数码科技","","");
+//		break; 
+//		case 2: AS.about(solo, "意见反馈","感谢您提供的反馈","输入您的意见","填写联系方式");
+//		break; 
+//		case 3: AS.about(solo, "版本更新","抢先下载","","");	
+//		break; 
+//		}
+//	}
+
+}

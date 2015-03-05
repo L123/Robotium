@@ -1,0 +1,69 @@
+package com.example.android.ceping.test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import android.test.ActivityInstrumentationTestCase2;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.robotium.solo.Solo;
+
+
+public class CePingAppTest extends ActivityInstrumentationTestCase2 {
+
+	public CePingAppTest() {
+		super(packageName, launchActivityClass);
+		// TODO Auto-generated constructor stub
+	}
+
+	public Solo solo;
+	RobotiumTest1 RT = new RobotiumTest1();
+
+	private static Class<?>launchActivityClass;
+	private static String mainActivity = "com.dtedu.mobile.evation.SeparateActivity";
+	private static String packageName = "com.dtedu.mobile.evation";
+	static{
+		try {
+			launchActivityClass = Class.forName(mainActivity);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+	@Before
+	public void setUp() throws Exception {
+		solo = new Solo(getInstrumentation(),getActivity());
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		solo.finishOpenedActivities();
+	}
+
+	@Test
+	//同步练习打开试卷退出
+//	public void test1syncExercises() {
+//		RT.checkLogin(solo);
+//		RT.syncExercises(solo,"二年级数学下册","数据收集整理");
+//		RT.answer(solo);
+//		RT.loginout(solo);
+//	}	
+	//专项练习生成试卷后退出
+	public void test2specialExercises(){
+		RT.checkLogin(solo);
+		//RT.syncExercises(solo,"二年级数学下册","数据收集整理");
+		RT.specialExercises(solo, "集合与常用逻辑用语");
+		//RT.examExercises(solo, "2014浙江湖州中考语文试题");
+		//RT.answer(solo);	
+		RT.loginout(solo);
+	}
+	
+}

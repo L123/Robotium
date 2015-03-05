@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<projectname="Hello world"default="doc">
+	<!--properies-->
+	<propertyname="src.dir"value="src"/>
+	<propertyname="report.dir"value="report"/>
+	<propertyname="classes.dir"value="classes"/>
+	<propertyname="lib.dir"value="lib"/>
+	<propertyname="dist.dir"value="dist"/>
+	<propertyname="doc.dir"value="doc"/>
+	<!--定义classpath-->
+	<pathid="master-classpath">
+		<filesetfile="${lib.dir}/*.jar"/>
+		<pathelementpath="${classes.dir}"/>
+	</path>
+	<!--初始化任务-->
+	<targetname="init">
+	</target>
+	<!--编译-->
+	<targetname="compile"depends="init"description="compile the source files">
+		<mkdirdir="${classes.dir}"/>
+		<javacsrcdir="${src.dir}"destdir="${classes.dir}"target="1.4">
+			<classpathrefid="master-classpath"/>
+		</javac>
+	</target>
+	<!--测试-->
+	<targetname="test"depends="compile"description="run junit test">
+		<mkdirdir="${report.dir}"/>
+		<junitprintsummary="on"haltonfailure="false"failureproperty="tests.failed"showoutput="true">
+			<classpathrefid="master-classpath"/>
+			<formattertype="plain"/>
+			<batchtesttodir="${report.dir}">
+				<filesetdir="${classes.dir}">
+					<includename="**/*Test.*"/>
+				</fileset>
+			</batchtest>
+		</junit>
+		<failif="tests.failed">***************************************************************  One or more tests failed!  Check the output ...  ***************************************************************</fail>
+	</target>
+	<!--打包成jar-->
+	<targetname="pack"depends="test"description="make .jar file">
+		<mkdirdir="${dist.dir}"/>
+		<jardestfile="${dist.dir}/hello.jar"basedir="${classes.dir}">
+			<excludename="**/*Test.*"/>
+			<excludename="**/Test*.*"/>
+		</jar>
+	</target>
+	<!--输出api文档-->
+	<targetname="doc"depends="pack"description="create api doc">
+		<mkdirdir="${doc.dir}"/>
+		<javadocdestdir="${doc.dir}"author="true"version="true"use="true"windowtitle="Test API">
+			<packagesetdir="${src.dir}"defaultexcludes="yes">
+				<includename="example/**"/>
+			</packageset>
+			<doctitle>
+				<![CDATA[<h1>Hello, test</h1>]]></doctitle>
+		<bottom>
+			<![CDATA[<i>All Rights Reserved.</i>]]></bottom>
+	<tagname="todo"scope="all"description="To do:"/>
+</javadoc>
+</target>
+</project>  

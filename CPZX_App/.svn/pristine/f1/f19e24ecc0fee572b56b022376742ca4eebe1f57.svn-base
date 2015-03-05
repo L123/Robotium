@@ -1,0 +1,217 @@
+package com.example.android.ceping.test;
+
+import static org.junit.Assert.assertEquals;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import com.robotium.solo.Solo;
+public class RobotiumTest1 {
+	public Solo solo;
+	/*public void solo(Solo solo){
+		this.solo = solo;
+	}*/
+
+	//退出登录
+		public void loginout(){
+			solo.clickOnView(solo.getView("home_top_iv_left"));
+			solo.clickOnText("账号设置");
+			solo.waitForText("注销", 1, 10000);
+			solo.clickOnText("注销");
+			checkMessage("登录");
+		}
+		//检查动态页面信息
+				public void checkDynamicMessage(String message){
+					//solo.waitForText(message,1,10000);
+					boolean actual = solo.searchText(message);
+					boolean expected = true;
+					assertEquals("没有找到【"+message+"】按钮",expected,actual);
+				}
+				
+		//检查页面信息
+		public void checkMessage(String message){
+			solo.waitForText(message,1,10000);
+			boolean actual = solo.searchText(message);
+			boolean expected = true;
+			assertEquals("没有找到【"+message+"】按钮",expected,actual);
+		}
+		
+		//登录
+		public void login(String username,String password){
+			checkMessage( "登录");	
+			solo.clearEditText(0);
+			solo.clearEditText(1);
+			solo.enterText(0, username);
+			solo.enterText(1, password);
+			//点击 按钮  
+			solo.clickOnView(solo.getView("login_bt"));  //点击登录按钮
+		}
+		//判断应用是否登录，若果没有登录就调用login（）方法进行登录操作
+		public void checkLogin(String username,String password){
+			if(solo.searchText("登录")==false){
+				solo.waitForText("七天诊断", 1, 10000);
+				//loginout();
+			}
+			else{		
+				login(username,password);
+				solo.waitForText("七天诊断", 1, 10000);
+			}
+			checkMessage("七天诊断");
+		}
+		
+		//年级、学科选择
+		public void choose(String grade,String subject){
+			if(grade!=null || subject!=null)
+			{
+				solo.clickOnView(solo.getView("home_top_iv_right"));//点击选择图标
+				if(grade!=null){
+					solo.clickOnText(grade);
+				}
+				if(subject!=null){
+					solo.clickOnText(subject);
+				}
+				solo.clickOnView(solo.getView("filter_sureBT"));
+				solo.sleep(3000);
+			}			
+		}
+		
+		//进入同步训练章节页面，打开试卷，课本名称参数：listMessage，章节：chapter
+		public void syncExercises(String grade,String subject,String listMessage,String chapter){
+			solo.clickOnText("同步训练");
+			choose(grade,subject);
+			solo.waitForText(listMessage);
+			//同步练习课程列表中的listMessage
+			solo.clickOnView((View) solo.getText(listMessage).getParent().getParent());
+			TextView TV = solo.getText(chapter);
+			RelativeLayout R = (RelativeLayout) TV.getParent();
+			View button = (View) R.getChildAt(2);//.findViewWithTag("com.dtedu.mobile.evation.bean.Catalog@b5234688");
+			solo.clickOnView(button);
+			solo.sleep(3000);
+			checkMessage("答题卡");
+		}
+		//进入专项训练知识点页面，点击知识点生成试卷，知识点名称参数：listMessage
+		public void specialExercises(String grade,String subject,String listMessage){
+			solo.clickOnText("专项训练");
+			choose(grade,subject);
+			solo.waitForText(listMessage);
+			solo.clickOnView((View)solo.getText(listMessage).getParent().getParent());
+			solo.sleep(3000);
+			checkMessage("答题卡");
+		}
+		
+		//进入考试训练，点击列表中的试卷，试卷名称参数：listMessage
+		public void examExercises(String grade,String subject,String listMessage){
+			solo.clickOnText("考试训练");
+			choose(grade,subject);
+			solo.waitForText(listMessage);
+			solo.clickOnView((View)solo.getText(listMessage).getParent());
+			solo.sleep(3000);
+			checkMessage("答题卡");
+			
+		}
+		
+		//进入强化训练，点击列表中知识点对应的图标，一级知识点参数：listMessage
+		public void intensifyExercisesOne(String grade,String subject,String listMessage){
+			solo.clickOnText("强化训练");
+			choose(grade,subject);
+			solo.waitForText(listMessage);
+			TextView TV = solo.getText(listMessage);
+			RelativeLayout R = (RelativeLayout) TV.getParent();
+			View button = (View) R.getChildAt(2);
+			solo.clickOnView(button);
+			solo.sleep(3000);
+			checkMessage("测试库");
+			//checkMessage(solo,"答题卡");
+		}
+		//进入强化训练，知识点参数1,2级：listMessageOne，listMessageTwo
+		public void intensifyExercisesTwo(String grade,String subject,String listMessageOne,String listMessageTwo){
+			solo.clickOnText("强化训练");
+			choose(grade,subject);
+			solo.waitForText(listMessageOne);
+			solo.clickOnView(solo.getText(listMessageOne));
+			solo.waitForText(listMessageTwo);
+			TextView TV = solo.getText(listMessageTwo);
+			RelativeLayout R = (RelativeLayout) TV.getParent();
+			View button = (View) R.getChildAt(2);
+			solo.clickOnView(button);
+			solo.sleep(3000);
+			checkMessage("测试库");
+			//checkMessage(solo,"答题卡");
+		}
+		//进入强化训练，知识点参数1,2,3级：listMessageOne，listMessageTwo,listMessageThree
+		public void intensifyExercisesThree(String grade,String subject,String listMessageOne,String listMessageTwo,String listMessageThree){
+			solo.clickOnText("强化训练");
+			choose(grade,subject);
+			solo.waitForText(listMessageOne);
+			solo.clickOnView((View) solo.getText(listMessageOne).getParent());
+			solo.waitForText(listMessageTwo);
+			solo.clickOnView((View) solo.getText(listMessageTwo).getParent());
+			solo.waitForText(listMessageThree);
+			TextView TV = solo.getText(listMessageThree);
+			RelativeLayout R = (RelativeLayout) TV.getParent();
+			View button = (View) R.getChildAt(2);
+			solo.clickOnView(button);
+			solo.sleep(3000);
+			checkMessage("测试库");
+			//checkMessage(solo,"答题卡");
+		}
+		
+		//向测试库添加试题并生成试卷
+		public void addQuestions(int n){
+			for(int i=0;i<n;i++){
+				if(solo.waitForText("加入测试库")==false){
+					solo.scrollToSide(solo.RIGHT);
+				}
+				else{
+					solo.clickOnText("加入测试库");	
+					if(i<n-1){   //最后一道试题添加后不需要翻页
+						solo.scrollToSide(solo.RIGHT);
+						solo.sleep(1000);
+					}
+				}			
+			}
+			solo.clickOnView(solo.getView("autoexerciselist_right_lib_rl"));//点击测试库
+			solo.sleep(3000);
+			
+			solo.clickOnView(solo.getView("layout_exerciselib_right_lib_rl"));//点击开始做题进入答题页面
+		}
+		
+		//答题
+		public void answer(){
+			do{
+				if(solo.getView("button_A").isShown()==true){
+					solo.clickOnButton("A");
+				}
+				else if(solo.getView("exam_next_title_btn")!=null){
+					solo.enterText(0, "sorry");
+					solo.clickOnView(solo.getView("exam_next_title_btn"));
+				}
+				
+				else if(solo.getView("handle_imageview")!=null){
+					solo.clickOnView(solo.getView("handle_imageview"));
+					solo.sleep(1000);
+					do{
+						if(solo.getView("button_child_A")!=null){
+							solo.clickOnButton("A");
+						}
+						
+						else if(solo.getView("exam_child_next_title_btn")!=null){
+							solo.enterText(0, "sorry");
+							solo.clickOnView(solo.getView("exam_child_next_title_btn"));
+						}
+						
+					}while(solo.getView("button_A")!=null || solo.getView("exam_child_next_title_btn")!=null);
+					
+				}
+			}while(solo.searchText("发送")==false);
+			
+			solo.sleep(1000);
+			
+			if(solo.getView("button_A")!=null || solo.getView("button_child_A")!=null){
+				solo.clickOnText("交卷");
+				solo.clickOnView(solo.getView("sureBT"));
+				solo.sleep(2000);
+				solo.goBack();
+				solo.goBack();
+			}
+		}		
+}
